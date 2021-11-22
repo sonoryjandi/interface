@@ -1,5 +1,3 @@
-package ru.list.real_pcy.homework_oop;
-
 public class Application {
     public static void main(String[] args) {
         Person alex = new Person("Alex", 23);
@@ -31,11 +29,5 @@ public class Application {
 
         alex.setSalary(12000);
         System.out.println("Alex salary is validated, Bob salary is non set cause he's fired");
-//        Company wee = new Company("Wee");
-//        wee.addNewWorker(alex, 74674);
-//        wee.addNewWorker(alex, 8576);
-//        wee.addNewWorker(bob, 67000);
-//        wee.deleteWorker(alex);
-//        wee.deleteWorker(alex);
     }
 }

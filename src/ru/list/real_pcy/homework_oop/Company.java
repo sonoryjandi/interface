@@ -79,7 +79,5 @@ public class Company implements IdealCompany {
     public void setName(String name) {
         this.name = name;
     }
-
-
     // endregion
 }

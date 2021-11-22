@@ -61,21 +61,21 @@ public class Person {
     }
     // endregion
 
-    private boolean isSalaryGreaterThenAge() {
-        return salary >= age;
+    public void salaryValidate(double salary) throws WrongSalaryException {
+        if (isSalaryNotSet()){
+            throw new WrongSalaryException("Salary isn't set!");
+        }
+        if (isAgeGreaterThenSalary(salary)) {
+            throw new WrongSalaryException("Age is greater then salary");
+        }
+        System.out.println(this.name + " has a salary that equals " + this.salary);
     }
 
-    public void salaryValidate() {
-        try {
-            if (salary == 0) {
-                throw new WrongSalaryException("Salary isn't set!");
-            }
-            if (!isSalaryGreaterThenAge()) {
-                throw new WrongSalaryException("Age is greater then salary");
-            }
-            System.out.println(this.name + " has a salary that equals " + this.salary);
-        } catch (WrongSalaryException exception) {
-            System.out.println(exception);
-        }
+    private boolean isSalaryNotSet() {
+        return getSalary() <= 0;
+    }
+
+    private boolean isAgeGreaterThenSalary(double salary) {
+        return getAge() >= salary;
     }
 }

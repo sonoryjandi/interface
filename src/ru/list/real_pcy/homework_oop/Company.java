@@ -12,16 +12,25 @@ public class Company {
         this.workers = new Person[0];
     }
 
-    public void addNewWorker(Person newWorker) {
-        workers = Arrays.copyOf(workers, workers.length + 1);
-        workers[workers.length - 1] = newWorker;
-        newWorker.setCompanyName(this.name);
+    public void addNewWorker(Person newWorker, double salary) {
+        try {
+            if (isPersonBelongsToStaff(newWorker)) {
+                throw new isPersonBelongsToWorkersException("This person is already in staff!");
+            }
+            Person[] newWorkersArray = Arrays.copyOf(workers, workers.length + 1);
+            newWorkersArray [newWorkersArray.length - 1] = newWorker;
+            workers = newWorkersArray;
+            newWorker.setCompanyName(this.getName());
+            newWorker.setSalary(salary);
+            newWorker.salaryValidate(salary);
+        } catch (isPersonBelongsToWorkersException | WrongSalaryException exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     public void deleteWorker(Person firedWorker) {
         try {
-            boolean isPersonBelongsToStaff = Arrays.asList(workers).contains(firedWorker);
-            if (!isPersonBelongsToStaff) {
+            if (!isPersonBelongsToStaff(firedWorker)) {
                 throw new isPersonBelongsToWorkersException("This person doesn't belong to staff!");
             }
             Person[] workersAfterDeleting = new Person[workers.length - 1];
@@ -36,9 +45,14 @@ public class Company {
             workers = workersAfterDeleting;
             firedWorker.setCompanyName(null);
             firedWorker.setSalary(0);
-        } catch (isPersonBelongsToWorkersException exception){
-            System.out.println(exception);
+            System.out.println("Worker " + firedWorker.getName() + " is fired.");
+        } catch (isPersonBelongsToWorkersException exception) {
+            System.out.println(exception.getMessage());
         }
+    }
+
+    private boolean isPersonBelongsToStaff(Person person) {
+        return Arrays.asList(workers).contains(person);
     }
 
     public void printAllWorkers() {

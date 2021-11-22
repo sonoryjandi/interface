@@ -45,4 +45,17 @@ public interface Worker {
         System.out.println("Hello! I'm WORKER. My name is " + this.getName());
     }
 
+    /**
+     * Метод проверяет зарплату работника
+     * @param salary
+     */
+    void salaryValidate(double salary) throws WrongSalaryException;
+
+    default boolean isSalaryNotSet(){
+        return getSalary() <= 0;
+    }
+
+    default boolean isAgeGreaterThenSalary(double salary) {
+        return getAge() >= salary;
+    }
 }

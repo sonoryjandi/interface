@@ -5,7 +5,7 @@ public interface IdealCompany {
     /**
      * Метод добавляет нового работника.
      */
-    void addNewWorker(Person newWorker, double salary);
+    void addNewWorker(Worker newWorker, double salary);
 
     /**
      * Метод удаляет существующего работника.

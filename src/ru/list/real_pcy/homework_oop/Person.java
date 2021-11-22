@@ -61,22 +61,12 @@ public class Person implements Worker {
     }
     // endregion
 
-    private boolean isSalarySet(){
-        if (salary >= 0){
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isAgeGreaterThenSalary(double salary) {
-        return age >= salary;
-    }
-
+    @Override
     public void salaryValidate(double salary) throws WrongSalaryException {
         if (isAgeGreaterThenSalary(salary)) {
             throw new WrongSalaryException("Age is greater then salary");
         }
-        if (!isSalarySet()) {
+        if (isSalaryNotSet()) {
             throw new WrongSalaryException("Salary isn't set!");
         }
         System.out.println(this.name + " has a salary that equals " + this.salary);

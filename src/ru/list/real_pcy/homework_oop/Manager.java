@@ -12,11 +12,13 @@ public class Manager implements Worker {
         this.age = age;
     }
 
+    // region setter/getter
     @Override
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
+    @Override
     public String getCompanyName(){
         return companyName;
     }
@@ -35,6 +37,7 @@ public class Manager implements Worker {
         this.salary = salary;
     }
 
+    @Override
     public double getSalary() {
         return salary;
     }
@@ -46,5 +49,17 @@ public class Manager implements Worker {
 
     public void setAge(int age) {
         this.age = age;
+    }
+    // endregion
+
+    @Override
+    public void salaryValidate(double salary) throws WrongSalaryException {
+        if (isAgeGreaterThenSalary(salary)) {
+            throw new WrongSalaryException("Age is greater then salary");
+        }
+        if (isSalaryNotSet()) {
+            throw new WrongSalaryException("Salary isn't set!");
+        }
+        System.out.println(this.name + " has a salary that equals " + this.salary);
     }
 }

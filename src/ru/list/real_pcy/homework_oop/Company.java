@@ -13,16 +13,17 @@ public class Company implements IdealCompany {
     }
 
     @Override
-    public void addNewWorker(Person newWorker, double salary) {
+    public void addNewWorker(Worker newWorker, double salary) {
         try {
             if (isPersonBelongsToStaff(newWorker)) {
                 throw new isPersonBelongsToWorkersException("This person is already in staff!");
             }
-            workers = Arrays.copyOf(workers, workers.length + 1);
-            workers[workers.length - 1] = newWorker;
+            Worker[] newWorkersArray = Arrays.copyOf(workers, workers.length + 1);
+            newWorkersArray[newWorkersArray.length - 1] = newWorker;
             newWorker.setCompanyName(this.getName());
             newWorker.setSalary(salary);
             newWorker.salaryValidate(salary);
+            workers = newWorkersArray;
         } catch (isPersonBelongsToWorkersException | WrongSalaryException exception) {
             System.out.println(exception);
         }
@@ -52,10 +53,7 @@ public class Company implements IdealCompany {
     }
 
     private boolean isPersonBelongsToStaff(Worker person) {
-        if(Arrays.asList(workers).contains(person)){
-            return true;
-        }
-        return false;
+        return Arrays.asList(workers).contains(person);
     }
 
     @Override

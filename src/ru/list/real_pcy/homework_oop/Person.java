@@ -15,7 +15,7 @@ package ru.list.real_pcy.homework_oop;
  * У Company должен быть field name.
  */
 
-public class Person {
+public class Person implements Worker {
 
     private String name;
     private int age;
@@ -61,21 +61,29 @@ public class Person {
     }
     // endregion
 
-    private boolean isSalaryGreaterThenAge() {
-        return salary >= age;
+    private boolean isSalarySet(){
+        if (salary >= 0){
+            return true;
+        }
+        return false;
     }
 
-    public void salaryValidate() {
-        try {
-            if (salary == 0) {
-                throw new WrongSalaryException("Salary isn't set!");
-            }
-            if (!isSalaryGreaterThenAge()) {
-                throw new WrongSalaryException("Age is greater then salary");
-            }
-            System.out.println(this.name + " has a salary that equals " + this.salary);
-        } catch (WrongSalaryException exception) {
-            System.out.println(exception);
+    private boolean isAgeGreaterThenSalary(double salary) {
+        return age >= salary;
+    }
+
+    public void salaryValidate(double salary) throws WrongSalaryException {
+        if (isAgeGreaterThenSalary(salary)) {
+            throw new WrongSalaryException("Age is greater then salary");
         }
+        if (!isSalarySet()) {
+            throw new WrongSalaryException("Salary isn't set!");
+        }
+        System.out.println(this.name + " has a salary that equals " + this.salary);
+    }
+
+    @Override
+    public void printHello() {
+        System.out.println("Hello, I'm PERSON");
     }
 }

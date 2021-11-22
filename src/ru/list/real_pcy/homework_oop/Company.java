@@ -2,9 +2,9 @@ package ru.list.real_pcy.homework_oop;
 
 import java.util.Arrays;
 
-public class Company {
+public class Company implements IdealCompany {
 
-    private Person[] workers;
+    private Worker[] workers;
     private String name;
 
     public Company(String name) {
@@ -12,19 +12,29 @@ public class Company {
         this.workers = new Person[0];
     }
 
-    public void addNewWorker(Person newWorker) {
-        workers = Arrays.copyOf(workers, workers.length + 1);
-        workers[workers.length - 1] = newWorker;
-        newWorker.setCompanyName(this.name);
+    @Override
+    public void addNewWorker(Person newWorker, double salary) {
+        try {
+            if (isPersonBelongsToStaff(newWorker)) {
+                throw new isPersonBelongsToWorkersException("This person is already in staff!");
+            }
+            workers = Arrays.copyOf(workers, workers.length + 1);
+            workers[workers.length - 1] = newWorker;
+            newWorker.setCompanyName(this.getName());
+            newWorker.setSalary(salary);
+            newWorker.salaryValidate(salary);
+        } catch (isPersonBelongsToWorkersException | WrongSalaryException exception) {
+            System.out.println(exception);
+        }
     }
 
-    public void deleteWorker(Person firedWorker) {
+    @Override
+    public void deleteWorker(Worker firedWorker) {
         try {
-            boolean isPersonBelongsToStaff = Arrays.asList(workers).contains(firedWorker);
-            if (!isPersonBelongsToStaff) {
+            if (!isPersonBelongsToStaff(firedWorker)) {
                 throw new isPersonBelongsToWorkersException("This person doesn't belong to staff!");
             }
-            Person[] workersAfterDeleting = new Person[workers.length - 1];
+            Worker[] workersAfterDeleting = new Worker[workers.length - 1];
             int workerAfterDeletingID = 0;
             for (int workerID = 0; workerID < workers.length; workerID++) {
                 if (workers[workerID] == firedWorker) {
@@ -36,24 +46,31 @@ public class Company {
             workers = workersAfterDeleting;
             firedWorker.setCompanyName(null);
             firedWorker.setSalary(0);
-        } catch (isPersonBelongsToWorkersException exception){
+        } catch (isPersonBelongsToWorkersException exception) {
             System.out.println(exception);
         }
     }
 
+    private boolean isPersonBelongsToStaff(Worker person) {
+        if(Arrays.asList(workers).contains(person)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void printAllWorkers() {
         for (int i = 0; i < workers.length; i++) {
-            Person s = workers[i];
-            System.out.println(s.getName());
+            System.out.println(workers[i].getName());
         }
     }
 
     //region getter-setter
-    public Person[] getWorkers() {
+    public Worker[] getWorkers() {
         return workers;
     }
 
-    public void setWorkers(Person[] workers) {
+    public void setWorkers(Worker[] workers) {
         this.workers = workers;
     }
 
@@ -64,5 +81,7 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
+
+
     // endregion
 }

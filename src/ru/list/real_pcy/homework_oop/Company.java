@@ -9,7 +9,7 @@ public class Company implements IdealCompany {
 
     public Company(String name) {
         this.name = name;
-        this.workers = new Person[0];
+        this.workers = new Worker[0];
     }
 
     @Override

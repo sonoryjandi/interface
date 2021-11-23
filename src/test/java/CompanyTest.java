@@ -14,15 +14,45 @@ class CompanyTest {
         assertThatNoException().isThrownBy(() -> {
             google.addNewWorker(den, 228);
         });
+        assertThat(google.getWorkerByIndex(0)).isEqualTo(den);
+    }
+
+    @Test
+    void addingExistentWorker() {
+        Person den = new Person("Den", 22);
+        Company google = new Company("Google");
+        assertThatNoException().isThrownBy(() -> {
+            google.addNewWorker(den, 22856);
+        });
+        Throwable thrown = catchThrowable(() -> {
+            google.addNewWorker(den, 22856);
+        });
+        assertThat(thrown).isInstanceOf(isPersonBelongsToWorkersException.class)
+                .hasMessageContaining("This person is already in staff!");
     }
 
     @Test
     void deleteWorker() {
-        Person finn = new Person("Finn", 45);
-        Company wee = new Company("Wee");
+        Person rex = new Person("Rex", 34);
+        Company pop = new Company("Pop");
         assertThatNoException().isThrownBy(() -> {
-            wee.addNewWorker(finn, 56);
-            wee.deleteWorker(finn);
+            pop.addNewWorker(rex, 22856);
+            pop.deleteWorker(rex);
         });
+    }
+
+    @Test
+    void deleteNonExistentWorker(){
+        Person rex = new Person("Rex", 34);
+        Company pop = new Company("Pop");
+        assertThatNoException().isThrownBy(() -> {
+            pop.addNewWorker(rex, 22856);
+            pop.deleteWorker(rex);
+        });
+        Throwable thrown = catchThrowable(() -> {
+            pop.deleteWorker(rex);
+        });
+        assertThat(thrown).isInstanceOf(isPersonBelongsToWorkersException.class)
+                .hasMessageContaining("This person doesn't belong to staff!");
     }
 }

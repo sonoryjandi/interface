@@ -10,8 +10,7 @@ public class Company {
         this.workers = new Person[0];
     }
 
-    public void addNewWorker(Person newWorker, double salary) {
-        try {
+    public void addNewWorker(Person newWorker, double salary) throws WrongSalaryException, isPersonBelongsToWorkersException {
             if (isPersonBelongsToStaff(newWorker)) {
                 throw new isPersonBelongsToWorkersException("This person is already in staff!");
             }
@@ -21,13 +20,9 @@ public class Company {
             newWorker.setCompanyName(this.getName());
             newWorker.setSalary(salary);
             newWorker.salaryValidate(salary);
-        } catch (isPersonBelongsToWorkersException | WrongSalaryException exception) {
-            System.out.println(exception.getMessage());
         }
-    }
 
-    public void deleteWorker(Person firedWorker) {
-        try {
+    public void deleteWorker(Person firedWorker) throws isPersonBelongsToWorkersException {
             if (!isPersonBelongsToStaff(firedWorker)) {
                 throw new isPersonBelongsToWorkersException("This person doesn't belong to staff!");
             }
@@ -44,9 +39,6 @@ public class Company {
             firedWorker.setCompanyName(null);
             firedWorker.setSalary(0);
             System.out.println("Worker " + firedWorker.getName() + " is fired.");
-        } catch (isPersonBelongsToWorkersException exception) {
-            System.out.println(exception.getMessage());
-        }
     }
 
     private boolean isPersonBelongsToStaff(Person person) {
@@ -77,4 +69,8 @@ public class Company {
     }
 
     // endregion
+
+    public Person getWorkerByIndex(int indexWorker) {
+        return workers[indexWorker];
+    }
 }

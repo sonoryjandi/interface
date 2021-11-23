@@ -33,11 +33,11 @@ public class Company {
             }
             Person[] workersAfterDeleting = new Person[workers.length - 1];
             int workerAfterDeletingID = 0;
-            for (int workerID = 0; workerID < workers.length; workerID++) {
-                if (workers[workerID] == firedWorker) {
+            for (Person worker : workers) {
+                if (worker == firedWorker) {
                     continue;
                 }
-                workersAfterDeleting[workerAfterDeletingID] = workers[workerID];
+                workersAfterDeleting[workerAfterDeletingID] = worker;
                 workerAfterDeletingID++;
             }
             workers = workersAfterDeleting;
@@ -54,8 +54,7 @@ public class Company {
     }
 
     public void printAllWorkers() {
-        for (int i = 0; i < workers.length; i++) {
-            Person s = workers[i];
+        for (Person s : workers) {
             System.out.println(s.getName());
         }
     }
@@ -76,5 +75,6 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
+
     // endregion
 }

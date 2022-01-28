@@ -1,5 +1,3 @@
-package ru.list.real_pcy.homework_oop;
-
 /**
  * 1. Создать 1 статичное поле любого типа String попробовать поменять
  * его у Боба и у Алекса; String companyName. Должен быть статичный метод,
@@ -15,8 +13,7 @@ package ru.list.real_pcy.homework_oop;
  * У Company должен быть field name.
  */
 
-public class Person {
-
+public class Person implements Worker {
     private String name;
     private int age;
     private double salary;
@@ -61,21 +58,19 @@ public class Person {
     }
     // endregion
 
-    private boolean isSalaryGreaterThenAge() {
-        return salary >= age;
+    @Override
+    public void salaryValidate(double salary) throws WrongSalaryException {
+        if (isAgeGreaterThenSalary(salary)) {
+            throw new WrongSalaryException("Age is greater then salary");
+        }
+        if (isSalaryNotSet()) {
+            throw new WrongSalaryException("Salary isn't set!");
+        }
+        System.out.println(this.name + " has a salary that equals " + this.salary);
     }
 
-    public void salaryValidate() {
-        try {
-            if (salary == 0) {
-                throw new WrongSalaryException("Salary isn't set!");
-            }
-            if (!isSalaryGreaterThenAge()) {
-                throw new WrongSalaryException("Age is greater then salary");
-            }
-            System.out.println(this.name + " has a salary that equals " + this.salary);
-        } catch (WrongSalaryException exception) {
-            System.out.println(exception);
-        }
+    @Override
+    public void printHello() {
+        System.out.println("Hello, I'm PERSON");
     }
 }

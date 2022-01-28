@@ -1,5 +1,3 @@
-package ru.list.real_pcy.homework_oop;
-
 public class Application {
     public static void main(String[] args) {
         Person alex = new Person("Alex", 23);

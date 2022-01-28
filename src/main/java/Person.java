@@ -1,5 +1,3 @@
-package ru.list.real_pcy.homework_oop;
-
 /**
  * 1. Создать 1 статичное поле любого типа String попробовать поменять
  * его у Боба и у Алекса; String companyName. Должен быть статичный метод,

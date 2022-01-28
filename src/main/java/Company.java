@@ -1,5 +1,3 @@
-package ru.list.real_pcy.homework_oop;
-
 import java.util.Arrays;
 
 public class Company {
